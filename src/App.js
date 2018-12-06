@@ -26,14 +26,18 @@ class App extends Component {
   render() {
     const { users, countries, cities, states } = this.state;
     return (
-      <div className="container">
-        <UserForm countries={countries} cities={cities} states={states} />
-        <Users
-          users={users}
-          countries={countries}
-          cities={cities}
-          states={states}
-        />
+      <div>
+        <div className="container">
+          <UserForm countries={countries} cities={cities} states={states} />
+        </div>
+        <div className="container">
+          <Users
+            users={users}
+            countries={countries}
+            cities={cities}
+            states={states}
+          />
+        </div>
       </div>
     );
   }

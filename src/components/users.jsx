@@ -15,13 +15,13 @@ class Users extends Component {
           </td>
           <td>{states.find(state => state.id == user["state_id"]).name}</td>
           <td>{cities.find(city => city.id == user["city_id"]).name}</td>
-          <td>{user.createdAt.toString()}</td>
+          <td>{new Date(user.createdAt).toDateString()}</td>
         </tr>
       ));
     }
     return (
-      <table className="table">
-        <thead>
+      <table className="table table-striped ">
+        <thead className="thead-dark">
           <tr>
             <th>name</th>
             <th>email</th>
