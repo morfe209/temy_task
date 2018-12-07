@@ -1,6 +1,7 @@
 import React from "react";
 import Form from "./common/form";
 import Joi from "joi-browser";
+import { saveUser } from "../services/userService";
 
 class UserForm extends Form {
   state = {
@@ -14,9 +15,8 @@ class UserForm extends Form {
       state_id: "",
       city_id: ""
     },
-    // countries: [],
-    // states: [],
-    // cities: [],
+    states: "",
+    cities: "",
     errors: {}
   };
 
@@ -30,6 +30,9 @@ class UserForm extends Form {
       // .regex(/^[\w-]+@([\w-]+\.)+[\w-]{2,4}$/)
       .label("Email"),
     adress: Joi.string().label("Adress"),
+    about_me: Joi.string()
+      .max(500)
+      .label("About me"),
     phone_number: Joi.number()
       .required()
       .label("Phone Number"),
@@ -41,17 +44,42 @@ class UserForm extends Form {
       .label("State"),
     city_id: Joi.string()
       .required()
-      .label("City"),
-    about_me: Joi.string()
-      .max(500)
-      .label("About me")
+      .label("City")
   };
+
+  doFilterStates = country_id => {
+    const { states } = this.props;
+    const filteredStates = states.filter(
+      state => state["country_id"] === country_id
+    );
+    this.setState({ states: filteredStates });
+  };
+  doFilterCities = state_id => {
+    const { cities } = this.props;
+    const filteredCities = cities.filter(city => city["state_id"] === state_id);
+    this.setState({ cities: filteredCities });
+  };
+
   doSubmit = async () => {
-    console.log("submited");
-    // await saveUser(this.state.data);
+    await saveUser(this.state.data);
+    // this.props.updateTable(result);
+    this.setState({ data: this.clearState(), states: "", cities: "" });
+  };
+  clearState = () => {
+    return {
+      name: "",
+      email: "",
+      adress: "",
+      about_me: "",
+      phone_number: "",
+      country_id: "",
+      state_id: "",
+      city_id: ""
+    };
   };
   render() {
-    const { countries, states, cities } = this.props;
+    const { countries } = this.props;
+    const { states, cities } = this.state;
     return (
       <div>
         <h1>User Table</h1>
@@ -96,10 +124,10 @@ class UserForm extends Form {
               {this.renderSelect("country_id", "Country *", countries)}
             </div>
             <div className="col-md-3 mb-3">
-              {this.renderSelect("state_id", "State *", states)}
+              {states && this.renderSelect("state_id", "State *", states)}
             </div>
             <div className="col-md-3 mb-3">
-              {this.renderSelect("city_id", "City *", cities)}
+              {cities && this.renderSelect("city_id", "City *", cities)}
             </div>
           </div>
           <div className="form-row">

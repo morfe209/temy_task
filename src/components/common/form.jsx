@@ -33,7 +33,6 @@ class Form extends Component {
     const errors = this.validate();
     this.setState({ errors: errors || {} });
     if (errors) return;
-
     this.doSubmit();
   };
 
@@ -43,7 +42,10 @@ class Form extends Component {
     if (errorMessage) errors[input.name] = errorMessage;
     else delete errors[input.name];
 
+    if (input.name === "country_id") this.doFilterStates(input.value);
+    if (input.name === "state_id") this.doFilterCities(input.value);
     const data = { ...this.state.data };
+
     data[input.name] = input.value;
 
     this.setState({ data, errors });

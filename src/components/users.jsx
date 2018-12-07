@@ -11,10 +11,11 @@ class Users extends Component {
           <td>{user.email}</td>
           <td>{user["phone_number"]}</td>
           <td>
-            {countries.find(country => country.id == user["country_id"]).name}
+            {/* {countries.find(country => country.id == user["country_id"]).name} */}
+            {countries[0].name}
           </td>
-          <td>{states.find(state => state.id == user["state_id"]).name}</td>
-          <td>{cities.find(city => city.id == user["city_id"]).name}</td>
+          <td>{states.find(state => state.id === user["state_id"]).name}</td>
+          <td>{cities.find(city => city.id === user["city_id"]).name}</td>
           <td>{new Date(user.createdAt).toDateString()}</td>
         </tr>
       ));
