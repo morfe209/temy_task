@@ -15,12 +15,8 @@ export function getUsers() {
 }
 
 export function saveUser(user) {
-  return http.post(apiEndPoint, user);
-  // http.request.open("POST", apiEndPoint, true);
-  // http.request.setRequestHeader("Content-Type", "application/json");
-  // http.request.setRequestHeader(
-  //   "Access-Control-Allow-Origin",
-  //   "http://localhost:3001/users"
-  // );
-  // return http.request.send(user);
+  // return http.post(apiEndPoint, user);
+  http.request.open("POST", apiEndPoint, true);
+  http.request.setRequestHeader("Content-Type", "application/json");
+  return http.request.send(user);
 }

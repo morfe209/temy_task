@@ -61,7 +61,7 @@ class UserForm extends Form {
   };
 
   doSubmit = async () => {
-    await saveUser(this.state.data);
+    await saveUser(JSON.stringify(this.state.data));
     // this.props.updateTable(result);
     this.setState({ data: this.clearState(), states: "", cities: "" });
   };
